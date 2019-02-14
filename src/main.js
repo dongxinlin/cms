@@ -10,8 +10,10 @@ import comment from './components/common/comment.vue'
 // VueResource的引用
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+
 // 配置主域名地址
 Vue.http.options.root = 'http://www.lovegf.cn:8899/';
+
 // 引入初始化css
 import './styles/common.css'
 
