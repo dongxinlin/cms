@@ -2,7 +2,7 @@
     <div class="comment-template">
         <h3>发表评论</h3>
         <hr>
-         <textarea  class="content" cols="30" rows="5" placeholder="请输入您要评论的内容"></textarea>
+         <textarea class="content" cols="30" rows="5" placeholder="请输入您要评论的内容"></textarea>
         <mt-button class="primary" type="primary">发表评论</mt-button>
         <ul class="critic">
             <li>
