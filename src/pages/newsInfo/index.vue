@@ -4,7 +4,7 @@
         <p class="time"><span>发表时间: {{message.add_time | dateFormat}}</span> <span>点击: {{message.click}}</span></p>
         <hr>
         <div class="content" v-html="message.content"></div>
-        <comment></comment>
+        <comment :id="this.id"></comment>
     </div>
 </template>
 <script>
@@ -29,7 +29,7 @@ export default {
                 }
             })
         }
-    }
+    },
 }
 </script>
 <style lang="less" scope>
