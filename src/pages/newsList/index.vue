@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
     .mui-media-body{
         h3{
             font-size: 14px;

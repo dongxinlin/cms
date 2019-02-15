@@ -37,6 +37,10 @@ Vue.filter('dateFormat',function(content,pattern='YYYY-MM-DD HH:mm:ss'){
 // 注册全局组件 comment
 Vue.component('comment', comment)
 
+// 引入图片预览插件
+import VuePreview from 'vue-pic-preview'
+Vue.use(VuePreview)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

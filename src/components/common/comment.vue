@@ -10,7 +10,7 @@
             第{{ i+1 }}楼&nbsp;&nbsp;用户：{{ item.user_name }}&nbsp;&nbsp;发表时间：{{ item.add_time | dateFormat }}
             </div>
                 <div class="cmt-body">
-                {{ item.content === 'undefined' ? '此用户很懒，嘛都没说': item.content }}
+                {{ item.content == 'undefined' ? '此用户很懒，嘛都没说': item.content }}
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@ export default {
             this.getComments()
         },
         postComment(){
+            if(!this.content.trim()) return Toast('输入的信息不能为空')
             this.$http.post('api/postcomment/'+this.id,{content:this.content}).then(res=>{
                 if(res.body.status===0){
                     // 重置才能看到发表的消息
@@ -63,7 +64,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
     .comment-template{
         h3{
             font-size: 16px;

@@ -32,7 +32,7 @@ export default {
     },
 }
 </script>
-<style lang="less" scope>
+<style lang="less">
 .news-info-container{
     padding: 0 5px;
     .title{
