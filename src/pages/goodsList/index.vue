@@ -1,6 +1,6 @@
 <template>
     <div class="good-list-container">
-        <div class="goods-item" v-for="item in goodsList" :key="item.id">
+        <div class="goods-item" v-for="item in goodsList" :key="item.id" @click="skip(item.id)">
             <img :src="item.img_url" alt="">
             <h1 class="title">{{item.title}}</h1>
             <div class="info">
@@ -34,6 +34,9 @@ export default {
         getMore(){
             this.pageindex++
             this.getGoodList()
+        },
+        skip(id){
+            this.$router.push('/home/goodsInfo/'+id)
         }
     },
 }
