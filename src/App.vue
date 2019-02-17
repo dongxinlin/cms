@@ -4,7 +4,7 @@
       fixed
       title="黑马程序员高端项目"
     ></mt-header>
-    <transition>
+    <transition name="tab">
       <router-view />
     </transition>
     <nav class="mui-bar mui-bar-tab">
@@ -26,8 +26,8 @@
         class="mui-tab-item1"
         to="/shopcar"
       >
-        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
-        <span class="mui-tab-label">购物车</span>
+        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="shopcar">9</span></span>
+        <span class="mui-tab-label" >购物车</span>
       </router-link>
       <router-link
         class="mui-tab-item1"
@@ -55,17 +55,17 @@ export default {
   padding-bottom: 50px;
   overflow-x: hidden;
 }
-.v-enter {
+.tab-enter {
   opacity: 0;
   transform: translateX(100%);
 }
-.v-leave-to {
+.tab-leave-to {
   opacity: 0;
   transform: translateX(-100%);
   position: absolute;
 }
-.v-enter-active,
-.v-leave-acitve {
+.tab-enter-active,
+.tab-leave-acitve {
   transition: all 0.5s ease;
 }
 

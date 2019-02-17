@@ -1,6 +1,8 @@
 <template>
     <div class="goods-info-container">
-
+    <transition @before-enter="beforeEnter"  @enter="enter" @after-enter="afterEnter">
+        <span class="globule" ref="ball"  v-show="ballFlag"></span>
+    </transition>
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
@@ -26,7 +28,7 @@
             </div>
             <div class="payment">
                 <mt-button type="primary" size="small">立即购买</mt-button>
-                <mt-button type="danger" size="small">加入购物车</mt-button>
+                <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
             </div>
        </div>
      </div>
@@ -58,7 +60,8 @@ export default {
             id:this.$route.params.id,
             pictureList:[],
             goodsGetdesc:{},
-            number:1
+            number:1,
+            ballFlag:false
         }
     },
     created(){
@@ -95,7 +98,32 @@ export default {
           }else if(this.mumber<1){
               this.number=1
           }
-      }
+      },
+
+      addToShopCar(){
+        this.ballFlag=!this.ballFlag 
+      },
+
+    //   钩子动画
+       beforeEnter(el){
+        el.style.transform="translate(0,0)"
+        
+       },
+       enter: function (el, done) {
+        el.offsetWeight;
+        const ballPosition = this.$refs.ball.getBoundingClientRect();
+        const badgePosition= document.getElementById('shopcar').getBoundingClientRect();
+
+        const xDist = badgePosition.left - ballPosition.left;
+        const yDist = badgePosition.top - ballPosition.top;
+
+        el.style.transform=`translate(${xDist}px,${yDist}px)`
+        el.style.transition="all 0.5s cubic-bezier(.4,-0.3,1,.68)"
+        done()
+       },
+       afterEnter: function (el) {
+        this.ballFlag=!this.ballFlag
+       },
     },
     
 }
@@ -156,6 +184,17 @@ export default {
         button{
             margin: 15px 0;
         }
+    }
+
+    .globule{
+        position: absolute;
+        left: 140px;
+        top: 400px;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        z-index: 99;
     }
 }
     
