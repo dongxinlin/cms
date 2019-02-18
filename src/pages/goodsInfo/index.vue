@@ -27,7 +27,7 @@
                 <input type="button" value="+" :disabled="number>=goodsGetdesc.stock_quantity" @click="number < goodsGetdesc.stock_quantity && number++">
             </div>
             <div class="payment">
-                <mt-button type="primary" size="small">立即购买</mt-button>
+                <mt-button type="primary" size="small" @click="byImmediately">立即购买</mt-button>
                 <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
             </div>
        </div>
@@ -99,15 +99,28 @@ export default {
               this.number=1
           }
       },
-
+      //立即添加按钮
       addToShopCar(){
         this.ballFlag=!this.ballFlag 
-      },
+        this.$store.commit('addToCar', {
+            id:this.id,
+            count:this.number,
+            price:this.goodsGetdesc.sell_price,
+            selected:true
+        })
 
+       
+      
+      },
+      //立即购买
+      byImmediately(){
+        this.addToShopCar()
+        this.$router.push('/shopcar')
+      },
+ 
     //   钩子动画
        beforeEnter(el){
         el.style.transform="translate(0,0)"
-        
        },
        enter: function (el, done) {
         el.offsetWeight;

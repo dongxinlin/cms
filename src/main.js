@@ -41,12 +41,53 @@ Vue.component('comment', comment)
 import VuePreview from 'vue-pic-preview'
 Vue.use(VuePreview)
 
+// Vuex的引用
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    car: JSON.parse(localStorage.getItem('car') || '[]')
+  },
+  mutations: {
+    //购物车的添加按钮
+    addToCar (state,message) {
+      let index=state.car.findIndex(val=>val.id===message.id)
+      if(index!==-1){
+        state.car[index].count+=message.count
+      }else{
+        state.car.push(message)
+      }
+      localStorage.setItem('car',JSON.stringify(state.car))
+    },
+    
+  },
+  getters:{
+    // 同步徽标
+    totalCount(state){
+      let totalCount=0
+      state.car.forEach(element => totalCount+=element.count)
+      return totalCount
+    },
+    // 数量的同步
+    carNumber(state){
+      let carNumber= {}
+      state.car.forEach(element=>{
+        carNumber[element.id]=element.count
+      })
+      return carNumber 
+    }
+    
+  }
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
