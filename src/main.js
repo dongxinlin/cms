@@ -60,6 +60,37 @@ const store = new Vuex.Store({
       }
       localStorage.setItem('car',JSON.stringify(state.car))
     },
+    // 自减同步
+    updateCount(state,obj){
+      state.car.some(item=>{
+        if(item.id==obj.id){
+          item.count=obj.count
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    // 删除的同步
+    removedataCount(state,id){
+      state.car.some((item,i)=>{
+        if(item.id==id){
+          state.car.splice(i,1)
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+
+    // 同步开关
+    updateSelected(state,obj){
+      state.car.some(item=>{
+        if(item.id==obj.id){
+          item.selected=!obj.selected
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    }
     
   },
   getters:{
@@ -76,8 +107,29 @@ const store = new Vuex.Store({
         carNumber[element.id]=element.count
       })
       return carNumber 
+    },
+    // 状态的同步
+    goodsStateChanged(state){
+      let o={}
+      state.car.forEach(element=>{
+        o[element.id]=element.selected
+      })
+      return o
+    },
+    // 商品的数量
+    goodsCountAndAmount(state){
+      let o={
+        count:0,
+        amout:0
+      }
+      state.car.forEach(item=>{
+        if(item.selected){
+          o.count+=item.count
+          o.amout+=item.count*item.price
+        }
+      })
+      return o
     }
-    
   }
 })
 

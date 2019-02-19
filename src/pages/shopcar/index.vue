@@ -1,18 +1,20 @@
 <template>
     <div class="shop-car-container" >
-    <div class="mui-card" v-for="item in shopList" :key="item.id">
+        
+    <div class="mui-card" v-for="(item,index) in shopList" :key="item.id">
       <div class="mui-card-content">
         <div class="mui-card-content-inner my-inner">
-          <mt-switch ></mt-switch>
+          <mt-switch @change="goodsStateChanged(item.id,$store.getters.goodsStateChanged[item.id])"
+          :value="$store.getters.goodsStateChanged[item.id]"></mt-switch>
           <img class="picture" :src="item.thumb_path">
           <div class="info">
               <h1>{{item.title}}</h1>
               <div class="quantity">
                   <span>¥{{item.sell_price}}</span>
-                  <input type="button" value="-">
-                  <input type="number" :value="$store.getters.carNumber[item.id]" >
-                  <input type="button" value="+">
-                  <a href="#">删除</a>
+                  <input type="button" @click="zijian(item.id)" value="-">
+                  <input type="number" :value="goodsCount[item.id]" >
+                  <input type="button" @click="zijia(item.id)" value="+">
+                  <a href="#" @click="removeGoods(item.id,index)">删除</a>
               </div>
           </div>
        </div>
@@ -24,7 +26,7 @@
         <div class="mui-card-content-inner account">
          <div>
             <p>总计 (不含运费)</p>
-            <p>已勾选商品<span class="red">85</span>件, 总价<span class="red">￥240896</span></p>
+            <p>已勾选商品<span class="red">{{$store.getters.goodsCountAndAmount.count}}</span>件, 总价<span class="red">￥{{$store.getters.goodsCountAndAmount.amout}}</span></p>
          </div>
          <mt-button type="danger">去结算 </mt-button>
        </div>
@@ -38,6 +40,7 @@
 export default {
     data() {
         return {
+            goodsCount:this.$store.getters.carNumber,
             shopList:[],
         }
     },
@@ -58,6 +61,26 @@ export default {
             }
             
         },
+
+        // 自减
+        zijian(id){
+            this.goodsCount[id] > 1 &&  this.goodsCount[id]--;
+            this.$store.commit('updateCount',{id,count:this.goodsCount[id]})
+        },
+
+        //自加
+        zijia(id){
+            this.goodsCount[id]++;
+            this.$store.commit('updateCount',{id,count:this.goodsCount[id]})
+        },
+        // 删除
+        removeGoods(id,index){
+            this.shopList.splice(index,1);
+            this.$store.commit('removedataCount',id)
+        },
+        goodsStateChanged(id,selected){
+            this.$store.commit('updateSelected',{id,selected})
+        }
     },
 }
 </script>
